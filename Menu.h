@@ -10,14 +10,15 @@
 #define esc 27
 #define back 8
 
+
 class menuClass {
     private:
         string name = "";
-        int w = 1;
-        int exit = 0, program = 0;
+        int program = 0;
         bool enter = false;
         string namef = "";
     public:
+        int w = 1, exit = 0;
         void detection();
         void menu(string menuText[]);
         void declare(int numberOfOptions, int numberProgram, string nameOfMenu);
@@ -66,8 +67,7 @@ void menuClass::detection() { // mueve el cursor dependiendo la decision del usu
         enter = !enter;
     }
 };
-void menuClass::menu(string menuText[]) {
-    while (w != exit) { // its a easy menu
+void menuClass::menu(string menuText[]) {// its a easy menu
         enter = false;
         while (!enter) {
             cls();//cursor appears only in selected option 
@@ -76,13 +76,13 @@ void menuClass::menu(string menuText[]) {
                 if (i != exit) {
                     if (w == i) { cout << "  >>"; } cout << "\t" << menuText[i] << "\n";
                 }
-                else { if (w == i) { cout << "  >>"; } cout << "\t" << "volver" << "\n"; }
+                else { if (w == i) { cout << "  >>"; } cout << "\t" << " back" << "\n"; }
             }
             //detection of the cursor
             detection();
             //detection of the cursor
         }
-    }
+        cls();
 };
 
 void menuClass::declare(int numberOfOptions, int numberProgram, string nameOfMenu) {
