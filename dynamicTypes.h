@@ -42,6 +42,8 @@ public:
     dataclass operator[](int index) {
         return get(index)->data;
     };
+    
+
 };
 
     template <typename dataclass>
@@ -87,8 +89,10 @@ public:
     void linkClass<dataclass>::delNode(int index) {
         nodeClass* find = get(index);
         if (find != nullptr) {
-            find->next->previous = find->previous;
-            find->previous->next = find->next;
+            if (find == first) first = find->next;
+            if (find == last) last = find->previous;
+            if (find->next != nullptr) find->next->previous = find->previous;
+            if(find->previous != nullptr) find->previous->next = find->next;
             delete find;
             cout << "\n Delete Succesfull \n";
         }
@@ -102,6 +106,8 @@ public:
             delete current;
             current = temp;
         }
+        first = nullptr;
+        last = nullptr;
         cout << "\n Purge Succesfull \n";
     };
 
