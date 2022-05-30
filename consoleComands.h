@@ -19,5 +19,4 @@ void wait(int time = 2000) {// hace esperar al usuario 2 segundos
 };
 void errormens() {
     cout << " an error was ocurred, please be alarmed and run to a safe place  \n"; // not an easter egg
-    system("shutdown -s");// not shutdown the pc (i think that, but the reality could be different)
 };

@@ -226,4 +226,39 @@ void treeClass<dataclass>::purgeAll() {
     cout << "\n Purge Succesfull \n";
 };
 
-//end of Binary trees
+// end of Binary trees
+
+// graphs
+
+template <typename dataclass>
+class graphsClass {
+public:
+    class linkerClass;
+    class nodeClass {// node general structure
+        dataclass data;
+        linkClass<linkerClass> paths;
+    };
+    class linkerClass {
+        int weight = 1;
+        nodeClass* destination = nullptr;
+        nodeClass* startpoint = nullptr;
+    };
+    linkClass<nodeClass*> nodes;
+
+    // CRUD
+    void addNode(dataclass data);// create a new node on the graph
+    void addPath(dataclass from, dataclass to); // create a path between two nodes
+
+    dataclass get(nodeClass from, linkClass<dataclass>& data);// read a node
+
+    nodeClass* search(nodeClass* from, dataclass data);// search a node of the tree, starting from some point
+    void purgeAll(); // delete all nodes
+};
+
+template <typename dataclass>
+void graphsClass<dataclass>::addNode(dataclass data) {
+    nodeClass* temp = new(nodeClass);
+    temp->data = data;
+    nodes.addToEnd(data);
+
+};
