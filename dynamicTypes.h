@@ -232,27 +232,37 @@ void treeClass<dataclass>::purgeAll() {
 
 template <typename dataclass>
 class graphsClass {
-public:
-    class linkerClass;
+private:
     class nodeClass {// node general structure
         dataclass data;
         linkClass<linkerClass> paths;
-    };
-    class linkerClass {
+        class linkerClass {
         int weight = 1;
         nodeClass* destination = nullptr;
         nodeClass* startpoint = nullptr;
+
     };
+    //CRUD
+        void addPath(dataclass to); // create a path between two nodes
+        nodeClass* searchPath(dataclass to);// search a node of the tree, starting from some point
+        void deletePath(dataclass to);// delete a node of the tree, starting from some point
+
+        void operator delete(){
+            paths.purgeAll();
+        };// delete a node 
+    };
+    public:
     linkClass<nodeClass*> nodes;
+    
 
     // CRUD
     void addNode(dataclass data);// create a new node on the graph
-    void addPath(dataclass from, dataclass to); // create a path between two nodes
-
-    dataclass get(nodeClass from, linkClass<dataclass>& data);// read a node
-
-    nodeClass* search(nodeClass* from, dataclass data);// search a node of the tree, starting from some point
+    void addPath(nodeClass to); // create a path between two nodes
+    nodeClass* search(dataclass to);// search a node of the tree, starting from some point
+    nodeClass* searchPath(nodeClass to);// search a node of the tree, starting from some point
+    
     void purgeAll(); // delete all nodes
+    dataclass get(int index=0);// read all nodes
 };
 
 template <typename dataclass>

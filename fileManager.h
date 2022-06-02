@@ -26,7 +26,7 @@ void fileManager<dataclass>::readToMemory() {
 	dataclass temp;
 	if (!fileObj.fail()){
 		while (!fileObj.eof()) {
-			fileObj >> temp;
+			fileObj.read((char*)&temp, sizeof(dataclass));
 			 if(!fileObj.eof()) inMemoryFile.addToEnd(temp);
 		}
 	}
@@ -40,7 +40,7 @@ template <typename dataclass>
 void fileManager<dataclass>::reWrite(dataclass data) {
 	fstream fileObj = fstream(file, ios::trunc | ios::out);
 	if (!fileObj.fail()) {
-		fileObj << data;
+		fileObj.write((char*)&temp, sizeof(dataclass));
 	}
 	else {
 		cout << "error writting the file";
@@ -52,7 +52,7 @@ template <typename dataclass>
 void fileManager<dataclass>::write(dataclass data) {
 	fstream fileObj = fstream(file, ios::app | ios::out);
 	if (!fileObj.fail()) {
-		fileObj << data;
+		fileObj.write((char*)&temp, sizeof(dataclass));
 	}
 	else {
 		cout << "error writting the file";
