@@ -6,17 +6,17 @@ using std::ios;using std::fstream;
 
 template <typename dataclass>
 class fileManager {
-private:
-	string file;
-public:
-	void declare(string fileName = "data", string fileExtension="bat") {
-		file = fileName + "." + fileExtension;
-	};
-	linkClass<dataclass> inMemoryFile; 
-	// void read(dataclass data);
-	void readToMemory();
-	void write(dataclass data);
-	void reWrite(dataclass data);
+	private:
+		string file;
+	public:
+		void declare(string fileName = "data", string fileExtension="bat") {
+			file = fileName + "." + fileExtension;
+		};
+		linkClass<dataclass> inMemoryFile; 
+		// void read(dataclass data);
+		void readToMemory();
+		void write(dataclass data);
+		void reWrite(dataclass data);
 };
 
 template <typename dataclass>

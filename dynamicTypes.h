@@ -234,15 +234,15 @@ template <typename dataclass>
 class graphsClass {
 private:
     class nodeClass {// node general structure
-        dataclass data;
-        linkClass<linkerClass> paths;
-        class linkerClass {
-        int weight = 1;
-        nodeClass* destination = nullptr;
-        nodeClass* startpoint = nullptr;
+        class wayClass {
+            int weight = 1;
+            nodeClass* destination = nullptr;
+            nodeClass* startpoint = nullptr;
 
-    };
-    //CRUD
+        };
+        dataclass data;
+        linkClass<wayClass> ways;
+        //CRUD
         void addPath(dataclass to); // create a path between two nodes
         nodeClass* searchPath(dataclass to);// search a node of the tree, starting from some point
         void deletePath(dataclass to);// delete a node of the tree, starting from some point
@@ -252,17 +252,16 @@ private:
         };// delete a node 
     };
     public:
+
     linkClass<nodeClass*> nodes;
     
-
     // CRUD
     void addNode(dataclass data);// create a new node on the graph
-    void addPath(nodeClass to); // create a path between two nodes
-    nodeClass* search(dataclass to);// search a node of the tree, starting from some point
-    nodeClass* searchPath(nodeClass to);// search a node of the tree, starting from some point
-    
+    nodeClass* search(dataclass to);// search a node of the graph
+    linkClass<pathClass> searchPath(dataclass to);// search a path between two nodes
     void purgeAll(); // delete all nodes
-    dataclass get(int index=0);// read all nodes
+    dataclass get(int index=0);// read all nodes or just one
+    
 };
 
 template <typename dataclass>
