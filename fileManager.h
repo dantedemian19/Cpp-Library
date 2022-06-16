@@ -12,7 +12,7 @@ class fileManager {
 		void declare(string fileName = "data", string fileExtension="bat") {
 			file = fileName + "." + fileExtension;
 		};
-		linkClass<dataclass> inMemoryFile; 
+		linkList<dataclass> inMemoryFile; 
 		// void read(dataclass data);
 		void readToMemory();
 		void write(dataclass data);
@@ -39,6 +39,7 @@ void fileManager<dataclass>::readToMemory() {
 template <typename dataclass>
 void fileManager<dataclass>::reWrite(dataclass data) {
 	fstream fileObj = fstream(file, ios::trunc | ios::out);
+	dataclass temp;
 	if (!fileObj.fail()) {
 		fileObj.write((char*)&temp, sizeof(dataclass));
 	}
@@ -51,6 +52,7 @@ void fileManager<dataclass>::reWrite(dataclass data) {
 template <typename dataclass>
 void fileManager<dataclass>::write(dataclass data) {
 	fstream fileObj = fstream(file, ios::app | ios::out);
+	dataclass temp;
 	if (!fileObj.fail()) {
 		fileObj.write((char*)&temp, sizeof(dataclass));
 	}

@@ -4,7 +4,7 @@
 
 template <typename dataclass>
 
-class linkClass {
+class linkList {
 public:
     class nodeClass {// node general structure
     public:
@@ -47,7 +47,7 @@ public:
 };
 
     template <typename dataclass>
-    void linkClass<dataclass>::addTofirst (dataclass data) {
+    void linkList<dataclass>::addTofirst (dataclass data) {
         nodeClass* z = new (nodeClass);
         z->data = data;
         if (first != nullptr) {
@@ -62,7 +62,7 @@ public:
     };
 
     template <typename dataclass>
-    void linkClass<dataclass>::addToEnd(dataclass data) {
+    void linkList<dataclass>::addToEnd(dataclass data) {
         nodeClass* z = new (nodeClass);
         if (first != nullptr) {
             last->next = z;
@@ -77,7 +77,7 @@ public:
     };
 
     template <typename dataclass>
-    void linkClass<dataclass>::updNode(int index, dataclass data) {
+    void linkList<dataclass>::updNode(int index, dataclass data) {
         nodeClass* find = get(index);
         if (find != nullptr) {
             find->data = data;
@@ -86,7 +86,7 @@ public:
     };
 
     template <typename dataclass>
-    void linkClass<dataclass>::delNode(int index) {
+    void linkList<dataclass>::delNode(int index) {
         nodeClass* find = get(index);
         if (find != nullptr) {
             if (find == first) first = find->next;
@@ -98,7 +98,7 @@ public:
         }
     };
     template <typename dataclass>
-    void linkClass<dataclass>::purgeAll() {
+    void linkList<dataclass>::purgeAll() {
         nodeClass* current = first;
         nodeClass* temp;
         while (current != nullptr) {
@@ -136,28 +136,28 @@ public:
     // CRUD
     void addToTree(dataclass from, int index);// create a new node on the tree
     
-    dataclass get(nodeClass from, linkClass<dataclass>& data);// read a node
+    dataclass get(nodeClass from, linkList<dataclass>& data);// read a node
     
     nodeClass* search(nodeClass* from, int index, int dir)// search a node of the tree, starting from some point
     {
         nodeClass* cursor = from;
         if (cursor != nullptr) {
-            if (cursor->id != index) {
-                if (cursor->id > index) {
+            if (cursor->data != index) {
+                if (cursor->data > index) {
                     if (cursor->left != nullptr)
                         cursor = search(cursor->left, index);
                     else
                         dir = 1;
 
                 }
-                if (cursor->id < index) {
+                if (cursor->data < index) {
                     if (cursor->right != nullptr)
                         cursor = search(cursor->right, index);
                     else
                         dir = 2;
 
                 }
-                if (cursor->id == index) {
+                if (cursor->data == index) {
                     dir = 3;
                 }
             }
@@ -199,7 +199,7 @@ void treeClass<dataclass>::addToTree(dataclass data, int id) {
 };
 
 template <typename dataclass>
-dataclass treeClass<dataclass>::get(treeClass::nodeClass from, linkClass<dataclass>& data)// read a node
+dataclass treeClass<dataclass>::get(treeClass::nodeClass from, linkList<dataclass>& data)// read a node
 {
     nodeClass* cursor = from;
     if (cursor != nullptr) {
@@ -232,33 +232,54 @@ void treeClass<dataclass>::purgeAll() {
 
 template <typename dataclass>
 class graphsClass {
-private:
+public:
     class nodeClass {// node general structure
-        class wayClass {
+        class pathClass {
             int weight = 1;
             nodeClass* destination = nullptr;
             nodeClass* startpoint = nullptr;
 
         };
         dataclass data;
-        linkClass<wayClass> ways;
+        linkList<pathClass*> paths;
         //CRUD
-        void addPath(dataclass to); // create a path between two nodes
-        nodeClass* searchPath(dataclass to);// search a node of the tree, starting from some point
-        void deletePath(dataclass to);// delete a node of the tree, starting from some point
+        void addPath(nodeClass to); // create a path between two nodes
+        pathClass* searchPath(nodeClass to) {// search a path between two nodes
+            int  i = 0;
+            while (paths[i] != nullptr) {
+                if (paths[i]->destination == to) {
+                    return paths[i];
+                }
+                i++;
+            }
+            return nullptr;
+        };
+        void deletePath(nodeClass to);// delete a node of the tree, starting from some point
 
-        void operator delete(){
+        /* void operator delete() {
             paths.purgeAll();
-        };// delete a node 
+        };// delete a node */
     };
-    public:
 
-    linkClass<nodeClass*> nodes;
+    linkList<nodeClass*> nodes;
     
     // CRUD
     void addNode(dataclass data);// create a new node on the graph
-    nodeClass* search(dataclass to);// search a node of the graph
-    linkClass<pathClass> searchPath(dataclass to);// search a path between two nodes
+    nodeClass* searchNode(dataclass index) {// search a node of the graph
+        int  i = 0;
+        while (nodes[i] != nullptr) {
+            if (nodes[i]->data == index) {
+                return nodes[i];
+            }
+            i++;
+        }
+        return nullptr;
+    };
+
+    linkList<nodeClass> searchPath(dataclass to) {// search a path between two nodes
+        
+    };
+
     void purgeAll(); // delete all nodes
     dataclass get(int index=0);// read all nodes or just one
     
@@ -266,8 +287,17 @@ private:
 
 template <typename dataclass>
 void graphsClass<dataclass>::addNode(dataclass data) {
-    nodeClass* temp = new(nodeClass);
+    nodeClass* temp = new (nodeClass);
     temp->data = data;
-    nodes.addToEnd(data);
+    nodes.addToEnd(temp);
+};
 
+
+
+template <typename dataclass>
+void graphsClass<dataclass>::nodeClass::addPath(nodeClass to) {
+    pathClass* temp = new(pathClass);
+    temp->startpoint = this;
+    temp->destination = to;
+    paths.addToEnd(temp);
 };
