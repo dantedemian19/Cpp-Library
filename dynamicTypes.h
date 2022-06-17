@@ -33,14 +33,15 @@ public:
             };
         }
         else return nullptr;
-    };;
+    };
+    int getSize();// get the size of the list
 
     void updNode(int index, dataclass data);// update a node
     void delNode(int index);// delete a node
     void purgeAll(); // delete all nodes
 
-    dataclass operator[](int index) {
-        return get(index)->data;
+    nodeClass* operator[](int index) {
+        return get(index);
     };
     
 
@@ -96,6 +97,16 @@ public:
             delete find;
             cout << "\n Delete Succesfull \n";
         }
+    };
+    template <typename dataclass>
+    int linkList<dataclass>::getSize() {
+        int size = 0;
+        nodeClass* current = first;
+        while (current != nullptr) {
+            size += 1;
+            current = current->next;
+        }
+        return size;
     };
     template <typename dataclass>
     void linkList<dataclass>::purgeAll() {
