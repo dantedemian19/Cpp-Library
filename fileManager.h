@@ -27,7 +27,7 @@ void fileManager<dataclass>::readToMemory() {
 	if (!fileObj.fail()){
 		while (!fileObj.eof()) {
 			fileObj >> temp;
-			if(!fileObj.eof()) inMemoryFile.addToEnd(temp);
+			inMemoryFile.addToEnd(temp);
 		}
 	}
 	else{

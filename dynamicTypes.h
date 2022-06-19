@@ -5,6 +5,8 @@
 template <typename dataclass>
 
 class linkList {
+private: 
+    int partition(int low = 0, int high = 0);
 public:
     class nodeClass {// node general structure
     public:
@@ -37,6 +39,8 @@ public:
     int getSize();// get the size of the list
 
     void updNode(int index, dataclass data);// update a node
+    void swap(int from, int  to);// swap two nodes 
+    void quickSort(int low = 0, int high = 0); // sort data (needs overload operators)
     void delNode(int index);// delete a node
     void purgeAll(); // delete all nodes
 
@@ -82,8 +86,56 @@ public:
         nodeClass* find = get(index);
         if (find != nullptr) {
             find->data = data;
-            cout << "\n Update Succesfull \n";
+            //cout << "\n Update Succesfull \n";
         }
+    };
+
+    template <typename dataclass>
+    void linkList<dataclass>::swap(int from, int to) {
+        nodeClass* node1 = get(from);
+        nodeClass* node2 = get(to);
+        dataclass temp = node1->data;
+        node1->data = node2->data;
+        node2->data = temp;
+    };
+
+    template <typename dataclass>
+    int linkList<dataclass>::partition(int low, int high) {
+        dataclass pivot = get(low)->data;
+        int count = 0;
+        int i = low + 1;
+        int j = high;
+        while (i <= high) {
+            if (get(i)->data <= pivot) count += 1;
+            i += 1;
+        }
+        int pivotIndex = low + count;
+        swap(pivotIndex, low);
+        i = low;
+        while (i < pivotIndex && j > pivotIndex) {
+
+            while (get(i)->data <= pivot) {
+                i++;
+            }
+
+            while (get(j)->data > pivot) {
+                j--;
+            }
+
+            if (i < pivotIndex && j > pivotIndex) {
+                swap(i++, j--);
+            }
+        }
+
+        return pivotIndex;
+    };
+
+    template <typename dataclass>
+    void linkList<dataclass>::quickSort(int low, int high) {
+        if (low >= high) return;
+        int p = partition(low, high);
+        quickSort(low, p - 1);
+        quickSort(p + 1, high);
     };
 
     template <typename dataclass>
@@ -95,7 +147,7 @@ public:
             if (find->next != nullptr) find->next->previous = find->previous;
             if(find->previous != nullptr) find->previous->next = find->next;
             delete find;
-            cout << "\n Delete Succesfull \n";
+            //cout << "\n Delete Succesfull \n";
         }
     };
     template <typename dataclass>
@@ -119,7 +171,7 @@ public:
         }
         first = nullptr;
         last = nullptr;
-        cout << "\n Purge Succesfull \n";
+        //cout << "\n Purge Succesfull \n";
     };
 
 //end of linked list
@@ -234,7 +286,7 @@ void treeClass<dataclass>::purgeAll() {
         delete current;
         current = temp;
     }
-    cout << "\n Purge Succesfull \n";
+    //cout << "\n Purge Succesfull \n";
 };
 
 // end of Binary trees
