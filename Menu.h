@@ -1,5 +1,6 @@
 #pragma once
 #include "consoleComands.h"
+#include "dynamicTypes.h"
 #include "include.h"
 
 // keyboard id's
@@ -17,11 +18,16 @@ class menuClass {
         int program = 0;
         bool enter = false;
         string namef = "";
+        linkList<string> text;
+        string exitText[2] = {
+        " exit",
+        " back"
+        };
     public:
         int w = 1, exit = 0;
         void detection();
-        void menu(string menuText[]);
-        void declare(int numberOfOptions, int numberProgram, string nameOfMenu);
+        void menu();
+        void declare(string nameOfMenu,string menuText[], int numberProgram = 1);
         void showGracia();
 };
 
@@ -68,16 +74,16 @@ void menuClass::detection() { // mueve el cursor dependiendo la decision del usu
         enter = !enter;
     }
 };
-void menuClass::menu(string menuText[]) {// its a easy menu
+void menuClass::menu() {// its a easy menu
         enter = false;
         while (!enter) {
             cls();//cursor appears only in selected option 
             cout << "  " << name << "  \n";
             for (int i = 1; i <= exit; i += 1) {
                 if (i != exit) {
-                    if (w == i) { cout << "  >>"; } cout << "\t" << menuText[i] << "\n";
+                    if (w == i) { cout << "  >>"; } cout << "\t" << text[i] << "\n";
                 }
-                else { if (w == i) { cout << "  >>"; } cout << "\t" << " back" << "\n"; }
+                else { if (w == i) { cout << "  >>"; } cout << "\t" << exitText[program] << "\n"; }
             }
             //detection of the cursor
             detection();
@@ -86,7 +92,13 @@ void menuClass::menu(string menuText[]) {// its a easy menu
         cls();
 };
 
-void menuClass::declare(int numberOfOptions, int numberProgram, string nameOfMenu) {
+void menuClass::declare(string nameOfMenu,string menuText[], int numberProgram) {
+    const int numberOfOptions = (sizeof(menuText) /sizeof(menuText[0]))-1;
+    int i = 0;
+    while (numberOfOptions+1 > i) {
+        text.addToEnd(menuText[i]);
+        i += 1;
+    }
     exit    = numberOfOptions;
     program = numberProgram;
     name    = nameOfMenu;

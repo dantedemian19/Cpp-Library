@@ -106,7 +106,7 @@ public:
         int i = low + 1;
         int j = high;
         while (i <= high) {
-            if (get(i)->data <= pivot) count += 1;
+            if (get(i)->data >= pivot) count += 1;
             i += 1;
         }
         int pivotIndex = low + count;
@@ -114,11 +114,11 @@ public:
         i = low;
         while (i < pivotIndex && j > pivotIndex) {
 
-            while (get(i)->data <= pivot) {
+            while (get(i)->data >= pivot) {
                 i++;
             }
 
-            while (get(j)->data > pivot) {
+            while (get(j)->data < pivot) {
                 j--;
             }
 
