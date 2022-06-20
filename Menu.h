@@ -27,7 +27,7 @@ class menuClass {
         int w = 1, exit = 0;
         void detection();
         void menu();
-        void declare(string nameOfMenu,string menuText[], int numberProgram = 1);
+        void declare(string nameOfMenu, string menuText[], int numberOfOptions, int numberProgram = 1);
         void showGracia();
 };
 
@@ -74,29 +74,33 @@ void menuClass::detection() { // mueve el cursor dependiendo la decision del usu
         enter = !enter;
     }
 };
+
 void menuClass::menu() {// its a easy menu
         enter = false;
+        int i = 1;
         while (!enter) {
+            i = 1;
             cls();//cursor appears only in selected option 
-            cout << "  " << name << "  \n";
-            for (int i = 1; i <= exit; i += 1) {
+            cout << " " << name << "  \n";
+            while(text[i-1]!=nullptr) {
                 if (i != exit) {
-                    if (w == i) { cout << "  >>"; } cout << "\t" << text[i] << "\n";
+                    if (w == i) { cout << "  >>"; } cout << "\t" << text[i]->data << "\n";
                 }
                 else { if (w == i) { cout << "  >>"; } cout << "\t" << exitText[program] << "\n"; }
+                 i += 1;
             }
             //detection of the cursor
             detection();
             //detection of the cursor
         }
         cls();
-};
+}; 
 
-void menuClass::declare(string nameOfMenu,string menuText[], int numberProgram) {
-    const int numberOfOptions = (sizeof(menuText) /sizeof(menuText[0]))-1;
+void menuClass::declare(string nameOfMenu, string menuText[], int numberOfOptions, int numberProgram) {
     int i = 0;
-    while (numberOfOptions+1 > i) {
-        text.addToEnd(menuText[i]);
+    while (numberOfOptions > i) {
+        cout << menuText[i];
+        text.addToEnd((string)menuText[i]);
         i += 1;
     }
     exit    = numberOfOptions;
