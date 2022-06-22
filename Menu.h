@@ -99,7 +99,7 @@ void menuClass::menu() {// its a easy menu
 void menuClass::declare(string nameOfMenu, string menuText[], int numberOfOptions, int numberProgram) {
     int i = 0;
     while (numberOfOptions > i) {
-        cout << menuText[i];
+        // cout << menuText[i];
         text.addToEnd((string)menuText[i]);
         i += 1;
     }
