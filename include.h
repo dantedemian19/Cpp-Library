@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <conio.h>
 #ifdef _WIN32
+#include <conio.h>
 #include <Windows.h>
 #else
 #include <unistd.h>
